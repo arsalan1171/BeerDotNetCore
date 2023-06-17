@@ -4,6 +4,7 @@ using BeerDotNetCore.Models;
 namespace BeerDotNetCore.Controllers
 {
     [Route("[controller]")]
+    [Produces("application/json")]
     [ApiController]
     public class BeerController : ControllerBase
     {
@@ -17,6 +18,11 @@ namespace BeerDotNetCore.Controllers
         }
 
         // GET: api/Beer
+        /// <summary>
+        /// Gets a list of beers
+        /// </summary>
+        /// <response code="200">Returns the list of beer</response>
+        /// <response code="404">the requested list is null</response>
         [HttpGet("menu")]
         public async Task<ActionResult<IEnumerable<Beer>>> GetBeers()
         {
@@ -45,6 +51,12 @@ namespace BeerDotNetCore.Controllers
         }
 
         // GET: api/Beer/5
+        /// <summary>
+        /// Gets beer by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <response code="200">Returns the requested beer</response>
+        /// <response code="404"> the item is null</response>
         [HttpGet("{id}")]
         public async Task<ActionResult<Beer>> GetBeer(int id)
         {
@@ -75,6 +87,11 @@ namespace BeerDotNetCore.Controllers
         }
 
         // GET: api/Beer/random
+        /// <summary>
+        /// Gets a random beer
+        /// </summary>
+        /// <response code="200">Returns a random beer</response>
+        /// <response code="404"> the requested beer is null</response>
         [HttpGet("random")]
         public async Task<ActionResult<Beer>> GetRandomBeer()
         {
@@ -104,6 +121,10 @@ namespace BeerDotNetCore.Controllers
             }
         }
 
+        /// <summary>
+        /// Searches for beer by query
+        /// </summary>
+        /// <param name="search_query"></param>
         [HttpGet("/search/{search_query}")]
         public async Task<ActionResult<Beer>> SearchBeers(string search_query)
         {
