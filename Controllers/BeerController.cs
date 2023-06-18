@@ -11,6 +11,8 @@ namespace BeerDotNetCore.Controllers
         private readonly BeerContext _context;
         private readonly HttpClient _client;
 
+        public const string API_URL_BEER = "https://api.punkapi.com/v2/beers";
+
         public BeerController(BeerContext context, HttpClient client)
         {
             _context = context;
@@ -26,12 +28,11 @@ namespace BeerDotNetCore.Controllers
         [HttpGet("menu")]
         public async Task<ActionResult<IEnumerable<Beer>>> GetBeers()
         {
-            string apiUrl = "https://api.punkapi.com/v2/beers";
             List<Beer>? beerList;
 
             try
             {
-                HttpResponseMessage response = await _client.GetAsync(apiUrl);
+                HttpResponseMessage response = await _client.GetAsync(API_URL_BEER);
                 response.EnsureSuccessStatusCode();
 
                 beerList = await response.Content.ReadFromJsonAsync<List<Beer>>();
@@ -60,11 +61,11 @@ namespace BeerDotNetCore.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Beer>> GetBeer(int id)
         {
-            string apiUrl = "https://api.punkapi.com/v2/beers/" + id;
+            string requestUrl = API_URL_BEER + '/' + id;
 
             try
             {
-                HttpResponseMessage response = await _client.GetAsync(apiUrl);
+                HttpResponseMessage response = await _client.GetAsync(requestUrl);
                 response.EnsureSuccessStatusCode();
 
                 var res = await response.Content.ReadAsStringAsync();
@@ -95,11 +96,11 @@ namespace BeerDotNetCore.Controllers
         [HttpGet("random")]
         public async Task<ActionResult<Beer>> GetRandomBeer()
         {
-            string apiUrl = "https://api.punkapi.com/v2/beers/random";
+            string requestUrl = API_URL_BEER + "/random";
 
             try
             {
-                HttpResponseMessage response = await _client.GetAsync(apiUrl);
+                HttpResponseMessage response = await _client.GetAsync(requestUrl);
                 response.EnsureSuccessStatusCode();
 
                 var res = await response.Content.ReadAsStringAsync();
@@ -128,11 +129,11 @@ namespace BeerDotNetCore.Controllers
         [HttpGet("/search/{search_query}")]
         public async Task<ActionResult<Beer>> SearchBeers(string search_query)
         {
-            string apiUrl = "https://api.punkapi.com/v2/beers?beer_name=" + search_query;
+            string requestUrl = API_URL_BEER + "?beer_name=" + search_query;
 
             try
             {
-                HttpResponseMessage response = await _client.GetAsync(apiUrl);
+                HttpResponseMessage response = await _client.GetAsync(requestUrl);
                 response.EnsureSuccessStatusCode();
 
                 var res = await response.Content.ReadAsStringAsync();
