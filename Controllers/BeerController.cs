@@ -68,8 +68,6 @@ namespace BeerDotNetCore.Controllers
                 HttpResponseMessage response = await _client.GetAsync(requestUrl);
                 response.EnsureSuccessStatusCode();
 
-                var res = await response.Content.ReadAsStringAsync();
-
                 List<Beer>? beerList = await response.Content.ReadFromJsonAsync<List<Beer>>();
                 Beer? beer = beerList?.FirstOrDefault();
 
@@ -102,8 +100,6 @@ namespace BeerDotNetCore.Controllers
             {
                 HttpResponseMessage response = await _client.GetAsync(requestUrl);
                 response.EnsureSuccessStatusCode();
-
-                var res = await response.Content.ReadAsStringAsync();
 
                 List<Beer>? beerList = await response.Content.ReadFromJsonAsync<List<Beer>>();
                 Beer? beer = beerList?.FirstOrDefault();
