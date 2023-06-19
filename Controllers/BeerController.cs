@@ -136,8 +136,6 @@ namespace BeerDotNetCore.Controllers
                 HttpResponseMessage response = await _client.GetAsync(requestUrl);
                 response.EnsureSuccessStatusCode();
 
-                var res = await response.Content.ReadAsStringAsync();
-
                 List<Beer>? beerList = await response.Content.ReadFromJsonAsync<List<Beer>>();
 
                 if (beerList == null)
